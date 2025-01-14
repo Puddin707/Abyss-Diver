@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b49fef9136396c94aa3d857a3386392e, type: 3}
+  m_Name: Green_Slime_DeadStateData
+  m_EditorClassIdentifier: 
+  deathChuckParticle: {fileID: 2034198127737738363, guid: 07aab9a80eaea784ab8ae2bb9092124c, type: 3}
+  deathBloodParticle: {fileID: 4270492159141957655, guid: c0163db7aa44e7a498568fdfaf543e9c, type: 3}
+  deathAnimationDuration: 0.4
