@@ -22,10 +22,10 @@ public class Entity : MonoBehaviour
     protected bool isStunned;
     protected bool isDead;
 
-    private Vector2 touchDamageBotLeft;
-    private Vector2 touchDamageTopRight;
-    private float lastTouchDamageTime;
-    //[SerializeField] private float touchDamageCooldown = 1f;
+    // private Vector2 touchDamageBotLeft;
+    // private Vector2 touchDamageTopRight;
+    // private float lastTouchDamageTime;
+    // [SerializeField] private float touchDamageCooldown = 1f;
 
     public virtual void Awake() {
         Core = GetComponentInChildren<Core>();
@@ -51,7 +51,7 @@ public class Entity : MonoBehaviour
             ResetStunResistance();
         }
 
-        //TouchDamage();
+        // TouchDamage();
     }
 
     public virtual void FixedUpdate() {
