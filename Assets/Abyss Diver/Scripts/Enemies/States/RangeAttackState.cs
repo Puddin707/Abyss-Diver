@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class RangeAttackState : AttackState
 {
+    
     protected D_RangeAttackState stateData;
 
     protected GameObject projectile;

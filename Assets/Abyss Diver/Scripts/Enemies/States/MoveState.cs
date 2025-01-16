@@ -1,9 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class MoveState : State
 {
+    protected Movement Movement { get => movement ?? core.GetCoreComponent(ref movement); }
+    private Movement movement;
+    private CollisionSenses CollisionSenses { get => collisionSenses ?? core.GetCoreComponent(ref collisionSenses); }
+    private CollisionSenses collisionSenses;
     protected D_MoveState stateData;
     protected bool isDetectingWall;
     protected bool isDetectingLedge;
@@ -16,16 +21,18 @@ public class MoveState : State
 
     public override void DoChecks() {
         base.DoChecks();
-
-        isDetectingLedge = core.CollisionSenses.LedgeVertical;
-        isDetectingWall = core.CollisionSenses.WallFront;
+        if (CollisionSenses) {
+            isDetectingLedge = CollisionSenses.LedgeVertical;
+            isDetectingWall = CollisionSenses.WallFront;
+        }
+        
         isPlayerInMinAgroRange = entity.CheckPlayerInMinAgroRange();
         isPlayerInMaxAgroRange = entity.CheckPlayerInMaxAgroRange();
     }
 
     public override void Enter() {
         base.Enter();
-        core.Movement.SetVelocityX(stateData.movementSpeed * core.Movement.FacingDirection);
+        Movement?.SetVelocityX(stateData.movementSpeed * Movement.FacingDirection);
     }
 
     public override void Exit() {
@@ -34,7 +41,7 @@ public class MoveState : State
 
     public override void LogicUpdate() {
         base.LogicUpdate();
-        core.Movement.SetVelocityX(stateData.movementSpeed * core.Movement.FacingDirection);
+        Movement?.SetVelocityX(stateData.movementSpeed * Movement.FacingDirection);
         
     }
 

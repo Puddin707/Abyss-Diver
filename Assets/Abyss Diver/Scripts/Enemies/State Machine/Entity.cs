@@ -5,6 +5,10 @@ using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
+    protected Movement Movement { get => movement ?? Core.GetCoreComponent(ref movement); }
+    private Movement movement;
+    private CollisionSenses CollisionSenses { get => collisionSenses ?? Core.GetCoreComponent(ref collisionSenses); }
+    private CollisionSenses collisionSenses;
     public D_Entity entityData;
     public FiniteStateMachine stateMachine;
     public Animator anim { get; private set; }
@@ -45,7 +49,7 @@ public class Entity : MonoBehaviour
         Core.LogicUpdate();
         stateMachine.currentState.LogicUpdate();
 
-        //anim.SetFloat("yVelocity", Core.Movement.RB.velocity.y);
+        //anim.SetFloat("yVelocity", Movement.RB.velocity.y);
         
         if (Time.time >= lastDamageTime + entityData.stunRecoveryTime) {
             ResetStunResistance();
@@ -75,8 +79,8 @@ public class Entity : MonoBehaviour
     }
 
     public virtual void DamageHop(float velocity) {
-        velocityWorkspace.Set(Core.Movement.RB.velocity.x, velocity);
-        Core.Movement.RB.velocity = velocityWorkspace;
+        velocityWorkspace.Set(Movement.RB.velocity.x, velocity);
+        Movement.RB.velocity = velocityWorkspace;
     }
 
     public virtual void ResetStunResistance() {
@@ -108,8 +112,8 @@ public class Entity : MonoBehaviour
 
     public virtual void OnDrawGizmos() {
         if (Core != null) {
-        Gizmos.DrawLine(Core.CollisionSenses.WallCheck.position, Core.CollisionSenses.WallCheck.position + (Vector3)(Vector2.right * Core.Movement.FacingDirection * Core.CollisionSenses.WallCheckDistance));
-        Gizmos.DrawLine(Core.CollisionSenses.LedgeCheckVertical.position, Core.CollisionSenses.LedgeCheckVertical.position + (Vector3)(Vector2.down * Core.CollisionSenses.WallCheckDistance));
+        Gizmos.DrawLine(CollisionSenses.WallCheck.position, CollisionSenses.WallCheck.position + (Vector3)(Vector2.right * Movement?.FacingDirection * CollisionSenses.WallCheckDistance));
+        Gizmos.DrawLine(CollisionSenses.LedgeCheckVertical.position, CollisionSenses.LedgeCheckVertical.position + (Vector3)(Vector2.down * CollisionSenses.WallCheckDistance));
         
 
         Gizmos.DrawWireSphere(playerCheck.position + (Vector3)(Vector2.right * entityData.closeRangeActionDistance), 0.2f);

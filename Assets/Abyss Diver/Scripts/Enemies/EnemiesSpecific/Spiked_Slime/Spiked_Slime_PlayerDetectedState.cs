@@ -32,7 +32,7 @@ public class Spiked_Slime_PlayerDetectedState : PlayerDetectedState
             stateMachine.ChangeState(enemy.lookForPlayerState);
         }
         else if(!isDetectingLedge) {
-            core.Movement.Flip();
+            Movement?.Flip();
             stateMachine.ChangeState(enemy.moveState);
         }
 

@@ -23,11 +23,12 @@ public class PlayerCrouchMoveState : PlayerGroundedState
     public override void LogicUpdate() {
         base.LogicUpdate();
 
-        core.Movement.CheckIfShouldFlip(xInput);
         
-        core.Movement.SetVelocityX(playerData.crouchMovementVelocity * core.Movement.FacingDirection);
 
         if (!isExitingState) {
+            Movement?.CheckIfShouldFlip(xInput);
+        
+            Movement?.SetVelocityX(playerData.crouchMovementVelocity * Movement.FacingDirection);
             if(xInput == 0f) {
                stateMachine.ChangeState(player.CrouchIdleState);
             }

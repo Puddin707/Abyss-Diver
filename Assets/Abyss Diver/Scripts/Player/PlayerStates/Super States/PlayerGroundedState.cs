@@ -8,7 +8,11 @@ public class PlayerGroundedState : PlayerState
     protected int yInput;
 
     protected bool isTouchingCeiling;
-    private bool JumpInput;
+    protected Movement Movement { get => movement ?? core.GetCoreComponent(ref movement); }
+    private Movement movement;
+    private CollisionSenses CollisionSenses { get => collisionSenses ?? core.GetCoreComponent(ref collisionSenses); }
+    private CollisionSenses collisionSenses;
+    private bool jumpInput;
     private bool grabInput;
     private bool isGrounded;
     private bool isTouchingWall;
@@ -21,10 +25,13 @@ public class PlayerGroundedState : PlayerState
     public override void DoChecks() {
         base.DoChecks();
 
-        isGrounded = core.CollisionSenses.Ground;
-        isTouchingWall = core.CollisionSenses.WallFront;
-        isTouchingLedge = core.CollisionSenses.LedgeHorizontal;
-        isTouchingCeiling = core.CollisionSenses.Ceiling;
+        if (CollisionSenses) {
+            isGrounded = CollisionSenses.Ground;
+            isTouchingWall = CollisionSenses.WallFront;
+            isTouchingLedge = CollisionSenses.LedgeHorizontal;
+            isTouchingCeiling = CollisionSenses.Ceiling;
+        }
+        
     }
 
     public override void Enter() {
@@ -42,7 +49,7 @@ public class PlayerGroundedState : PlayerState
 
         xInput = player.InputHandler.NormInputX;
         yInput = player.InputHandler.NormInputY;
-        JumpInput = player.InputHandler.JumpInput;
+        jumpInput = player.InputHandler.JumpInput;
         grabInput = player.InputHandler.GrabInput;
         dashInput = player.InputHandler.DashInput;
 
@@ -52,7 +59,7 @@ public class PlayerGroundedState : PlayerState
         else if (player.InputHandler.AttackInputs[(int)CombatInputs.secondary] && !isTouchingCeiling) {
             stateMachine.ChangeState(player.SecondaryAttackState);
         }
-        else if (JumpInput && player.JumpState.CanJump() && !isTouchingCeiling) {
+        else if (jumpInput && player.JumpState.CanJump() && !isTouchingCeiling) {
             stateMachine.ChangeState(player.JumpState);
         }
         else if (!isGrounded) {

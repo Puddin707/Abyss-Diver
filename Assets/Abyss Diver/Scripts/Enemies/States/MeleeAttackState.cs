@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class MeleeAttackState : AttackState
 {
+    private CollisionSenses CollisionSenses { get => collisionSenses ?? core.GetCoreComponent(ref collisionSenses); }
+    private CollisionSenses collisionSenses;
     protected D_MeleeAttackState stateData;
 
     public MeleeAttackState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, Transform attackPosition, D_MeleeAttackState stateData) : base(entity, stateMachine, animBoolName, attackPosition)
@@ -47,7 +49,7 @@ public class MeleeAttackState : AttackState
             IKnockbackable knockbackable = collider.GetComponent<IKnockbackable>();
 
             if (knockbackable != null) {
-                knockbackable.Knockback(stateData.knockbackAngle, stateData.knockbackStrength, core.Movement.FacingDirection);
+                knockbackable.Knockback(stateData.knockbackAngle, stateData.knockbackStrength, Movement.FacingDirection);
             }
         }
     }
